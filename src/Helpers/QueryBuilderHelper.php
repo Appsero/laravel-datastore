@@ -24,7 +24,7 @@ trait QueryBuilderHelper
 
         $result = $this->getClient()->lookup($key);
 
-        if (! $result || empty($result)) {
+        if (empty($result)) {
             return null;
         }
 
@@ -134,7 +134,19 @@ trait QueryBuilderHelper
 
         $entity = $this->getClient()->entity($key, $values, $options);
 
-        return $this->getClient()->insert($entity);
+        $result = $this->getClient()->insert($entity);
+
+		if (is_numeric($result) && $result > 0) {
+			$entity = $values;
+			$entity['id'] = $entity['id'] ?? $key->path()[0]['name'] ?? $key->path()[0]['id'];
+			$entity['_key'] = $key->path()[0];
+			$entity['_keys'] = $key->path();
+			$entity['__key__'] = $key;
+
+			return (object) $entity;
+		}
+
+		return null;
     }
 
     /**
