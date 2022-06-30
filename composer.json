@@ -1,10 +1,10 @@
 {
     "name": "appsero/laravel-datastore",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A package for using google datastore as a database driver.",
     "type": "package",
     "license": "MIT",
-    "keywords": ["laravel datastore", "datastore", "google datastore"],
+    "keywords": ["laravel datastore", "datastore", "google datastore", "datastore eloquent"],
     "homepage": "https://github.com/appsero/laravel-datastore",
     "authors": [
         {
@@ -15,10 +15,10 @@
     "require": {
         "php": "^7.2|^8.0",
         "ext-json": "*",
-        "illuminate/support": "^6|^7|^8",
-        "illuminate/pagination": "^6|^7|^8",
-        "illuminate/database": "^6|^7|^8",
-        "illuminate/http": "^6|^7|^8",
+        "illuminate/support": "^6|^7|^8|^9",
+        "illuminate/pagination": "^6|^7|^8|^9",
+        "illuminate/database": "^6|^7|^8|^9",
+        "illuminate/http": "^6|^7|^8|^9",
         "google/cloud-datastore": "^1.12"
     },
     "require-dev": {
