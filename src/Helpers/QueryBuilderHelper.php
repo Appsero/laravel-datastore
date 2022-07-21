@@ -116,7 +116,6 @@ trait QueryBuilderHelper
 
         return $this->getClient()->deleteBatch($keys);
     }
-
     /**
      * @inheritdoc
      */
@@ -152,8 +151,18 @@ trait QueryBuilderHelper
     /**
      * @inheritdoc
      */
+    public function update(array $values, $key = '', $options = [])
+    {
+        $this->applyBeforeQueryCallbacks();
+        return $this->upsert($values, $key, $options);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function upsert(array $values, $key = '', $options = [])
     {
+        
         if (empty($this->from)) {
             throw new \LogicException('No kind/table specified');
         }
@@ -161,10 +170,22 @@ trait QueryBuilderHelper
         if (empty($values)) {
             return true;
         }
+        foreach($this->wheres as $where):
+            if($where['value'] instanceof \Google\Cloud\Datastore\Key):
+                $key = $where['value'];
+                break;
+            endif;
+        endforeach;
 
-        $key = $key ? $this->getClient()->key($this->from, $key) : $this->getClient()->key($this->from);
-
-        $entity = $this->getClient()->entity($key, $values, $options);
+        if($key instanceof \Google\Cloud\Datastore\Key):
+            $entity = $this->getClient()->lookup($key);
+            foreach($values as $key=>$value):
+                $entity->$key = $value;
+            endforeach;
+        else:
+            $key = $key ? $this->getClient()->key($this->from, $key) : $this->getClient()->key($this->from);
+            $entity = $this->getClient()->entity($key, $values, $options);
+        endif;
 
         return $this->getClient()->upsert($entity);
     }
