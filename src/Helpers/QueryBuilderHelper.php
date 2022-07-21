@@ -178,11 +178,7 @@ trait QueryBuilderHelper
         endforeach;
 
         if($key instanceof \Google\Cloud\Datastore\Key):
-            $entity = $this->getClient()->lookup($key);
-
-            if($entity == null):
-                $entity = $this->getClient()->entity($key, $values, $options);
-            endif;
+            $entity = $this->getClient()->lookup($key) ?? $this->getClient()->entity($key, $values, $options);
 
             foreach($values as $key=>$value):
                 $entity->$key = $value;
