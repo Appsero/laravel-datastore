@@ -158,13 +158,13 @@ trait QueryBuilderHelper
             throw new \LogicException('No kind/table specified');
         }
 
-        if (empty($values)) {
+        if (empty($values[0])) {
             return true;
         }
 
         $key = $key ? $this->getClient()->key($this->from, $key) : $this->getClient()->key($this->from);
 
-        $entity = $this->getClient()->entity($key, $values, $options);
+        $entity = $this->getClient()->entity($key, $values[0], $options);
 
         return $this->getClient()->upsert($entity);
     }
