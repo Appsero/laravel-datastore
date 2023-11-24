@@ -64,6 +64,7 @@ class DatastoreConnection extends Connection
     {
         $client = new DatastoreClient([
             'keyFilePath' => $config['key_file_path'] ?? base_path('gcloud-credentials.json'),
+            'transport' => $config['transport'] ?? 'grpc',
         ]);
 
         return $this->setClient($client);
