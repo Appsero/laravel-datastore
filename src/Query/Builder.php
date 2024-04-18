@@ -84,7 +84,7 @@ class Builder extends BaseBuilder
     /**
      * Enhanced pagination is not possible as count query is not possible in datastore.
      */
-    public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null)
+    public function paginate($perPage = 15, $columns = ['*'], $pageName = 'page', $page = null, $total = null)
     {
         return $this->simplePaginate($perPage, $columns, $pageName, $page);
     }
