@@ -48,10 +48,13 @@ You need to add `datastore` connection in `config/database.php` file.
         'driver' => 'datastore',
         'key_file_path' => env('GOOGLE_APPLICATION_CREDENTIALS', 'gcloud-credentials.json'),
         'prefix' => env('DATASTORE_PREFIX', null),
+        'transport' => 'grpc', // optional, defaults to grpc
     ],
     ...
 ],
 ```
+
+Please note: you can point to a local Datastore emulator by setting the `DATASTORE_EMULATOR_HOST` environment variable. In that case passing in a key file is not required.
 
 ### Access using Eloquent Model
 
